@@ -1,0 +1,39 @@
+{% if members %}
+<div class="row g-4">
+    {% for membership in members %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 member-card shadow-sm">
+            {% if membership.member.photo %}
+            <img src="{{ membership.member.photo.url }}" class="card-img-top" alt="{{ membership.member }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ membership.member.first_name }} {{ membership.member.last_name }}</h5>
+                <h6 class="card-subtitle mb-2 text-primary">{{ membership.position }}</h6>
+                {% if membership.member.parish %}
+                <p class="card-text text-muted"><small>Base: {{ membership.member.parish.name }}</small></p>
+                {% endif %}
+                {% if membership.member.bio %}
+                <p class="card-text">{{ membership.member.bio|truncatewords:20 }}</p>
+                {% endif %}
+                {% if membership.mandate.start_date %}
+                <p class="card-text">
+                    <small>
+                        Mandat: {{ membership.mandate.start_date|date:"d/m/Y" }}
+                        {% if membership.mandate.end_date %}- {{ membership.mandate.end_date|date:"d/m/Y" }}{% endif %}
+                    </small>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">Aucun membre trouvé pour ce bureau.</div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="col-12">
+    <div class="alert alert-info">Aucun membre trouvé pour ce bureau.</div>
+</div>
+{% endif %}

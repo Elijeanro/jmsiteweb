@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Gérer les Entrées Historiques - Administration{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+<!-- Bouton de retour au dashboard -->
+    <div class="mb-4">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Retour au tableau de bord
+        </a>
+    </div>
+    <h1 class="mb-4"><i class="fas fa-history me-2"></i>Gérer les Entrées Historiques : {{ history.title }}</h1>
+
+    <!-- Message de succès ou d'erreur -->
+    {% if messages %}
+    <div class="alert alert-dismissible fade show {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <!-- Boutons pour ajouter une nouvelle entrée historique et revenir aux historiques -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'add_history_entry' history.id %}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Ajouter une Entrée Historique
+        </a>
+        <a href="{% url 'manage_histories' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Retour aux Historiques
+        </a>
+    </div>
+
+    <!-- Timeline des entrées historiques -->
+    <div class="timeline">
+        {% for entry in entries %}
+        <div class="timeline-item mb-5">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h3 class="timeline-year bg-primary text-white p-3 rounded">{{ entry.date|date:"Y" }}</h3>
+                    {% if entry.image %}
+                    <img src="{{ entry.image.url }}" class="img-fluid rounded mt-3" alt="{{ entry.subtitle }}" style="max-height: 200px;">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ entry.subtitle }}</h4>
+                            <p class="card-text">{{ entry.content|truncatechars:200 }}</p>
+                            <p class="text-muted"><small>{{ entry.date|date:"d M Y" }}</small></p>
+                            <div class="d-flex justify-content-end">
+                                <a href="{% url 'edit_history_entry' history.id entry.id %}" class="btn btn-sm btn-warning me-2">
+                                    <i class="fas fa-edit me-1"></i>Modifier
+                                </a>
+                                <a href="{% url 'delete_history_entry' history.id entry.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette entrée historique ?')">
+                                    <i class="fas fa-trash me-1"></i>Supprimer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info">Aucune entrée historique trouvée pour cet historique.</div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if entries.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; Première</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ entries.previous_page_number }}">Précédente</a>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page {{ entries.number }} sur {{ entries.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if entries.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ entries.next_page_number }}">Suivante</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ entries.paginator.num_pages }}">Dernière &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    .timeline:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 15px;
+        width: 2px;
+        background-color: #dee2e6;
+    }
+    .timeline-item {
+        position: relative;
+    }
+    .timeline-item:before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: -35px;
+        width: 20px;
+        height: 20px;
+        background-color: #0d6efd;
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}

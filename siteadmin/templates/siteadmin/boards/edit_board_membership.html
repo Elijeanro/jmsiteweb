@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Modifier un Membership{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-white">
+                    <h2 class="mb-0"><i class="fas fa-users-cog me-2"></i>Modifier un Membership</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Bureau -->
+                        <div class="mb-3">
+                            <label for="{{ form.board.id_for_label }}" class="form-label">
+                                <i class="fas fa-users-cog me-1"></i>Bureau
+                            </label>
+                            {{ form.board }}
+                            {% if form.board.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.board.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Membre -->
+                        <div class="mb-3">
+                            <label for="{{ form.member.id_for_label }}" class="form-label">
+                                <i class="fas fa-user me-1"></i>Membre
+                            </label>
+                            {{ form.member }}
+                            {% if form.member.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.member.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Poste -->
+                        <div class="mb-3">
+                            <label for="{{ form.position.id_for_label }}" class="form-label">
+                                <i class="fas fa-user-tag me-1"></i>Poste
+                            </label>
+                            {{ form.position }}
+                            {% if form.position.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.position.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Mandat -->
+                        <div class="mb-3">
+                            <label for="{{ form.mandate.id_for_label }}" class="form-label">
+                                <i class="fas fa-calendar-alt me-1"></i>Mandat
+                            </label>
+                            {{ form.mandate }}
+                            {% if form.mandate.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.mandate.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Règles importantes -->
+                        <div class="alert alert-info mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-exclamation-circle me-1"></i>Règles importantes</h5>
+                            <ul class="mb-0">
+                                <li>Le mandat doit correspondre au type de bureau.</li>
+                                <li>Le mandat doit être associé au même membre.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.history.back();">
+                                <i class="fas fa-arrow-left me-1"></i>Retour
+                            </button>
+                            <div>
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-save me-1"></i>Enregistrer les modifications
+                                </button>
+                                <a href="{% url 'manage_board_memberships' %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-1"></i>Annuler
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

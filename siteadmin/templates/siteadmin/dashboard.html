@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Tableau de Bord - Administration{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Tableau de Bord | Administration des Contenus</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-danger text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Événements</h5>
+                    <a href="{% url 'manage_events' %}" class="btn btn-success">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-danger text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Documents</h5>
+                    <a href="{% url 'manage_documents' %}" class="btn btn-success">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-danger text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Historiques</h5>
+                    <a href="{% url 'manage_histories' %}" class="btn btn-success">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Doyennés</h5>
+                    <a href="{% url 'manage_doyennes' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Paroisses</h5>
+                    <a href="{% url 'manage_parishes' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Bureaux</h5>
+                    <a href="{% url 'manage_boards' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Postes</h5>
+                    <a href="{% url 'manage_member_positions' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Membres</h5>
+                    <a href="{% url 'manage_members' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Mandats</h5>
+                    <a href="{% url 'manage_mandates' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

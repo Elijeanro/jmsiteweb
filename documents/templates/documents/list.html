@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Bibliothèque - Association Jésus Miséricordieux{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-5">Bibliothèque de Documents</h1>
+<div class="row">
+    {% for document in documents %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ document.title }}</h5>
+                <p class="card-text"><small class="text-muted">{{ document.category }}</small></p>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ document.file.url }}" target="_blank" class="btn btn-outline-primary">
+                        <i class="fas fa-eye me-1"></i>Aperçu
+                    </a>
+                    <a href="{{ document.file.url }}" class="btn btn-primary" download>
+                        <i class="fas fa-download me-1"></i>Télécharger
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if documents.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">&laquo; Première</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ documents.previous_page_number }}">Précédente</a>
+        </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+            <span class="page-link">
+                Page {{ documents.number }} sur {{ documents.paginator.num_pages }}
+            </span>
+        </li>
+
+        {% if documents.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ documents.next_page_number }}">Suivante</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ documents.paginator.num_pages }}">Dernière &raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}

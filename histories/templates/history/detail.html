@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{{ history.title }} - Association Jésus Miséricordieux{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4"><i class="fas fa-history me-2"></i>{{ history.title }}</h1>
+
+    <a href="{% url 'histories' %}" class="btn btn-outline-secondary mb-4">
+        <i class="fas fa-arrow-left me-1"></i>Retour à la liste
+    </a>
+
+    <!-- Timeline des entrées historiques -->
+    <div class="timeline">
+        {% for entry in history.entries.all %}
+        <div class="timeline-item mb-5">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h3 class="timeline-year bg-primary text-white p-3 rounded">{{ entry.date|date:"d-M-Y" }}</h3>
+                    {% if entry.image %}
+                    <img src="{{ entry.image.url }}" class="img-fluid rounded mt-3" alt="{{ entry.subtitle }}" style="max-height: 200px;">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ entry.subtitle }}</h4>
+                            <p class="card-text">{{ entry.content }}</p>
+                            <p class="text-muted"><small>{{ entry.date|date:"d M Y" }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info">Aucune entrée historique trouvée pour cet historique.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    .timeline:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 15px;
+        width: 2px;
+        background-color: #dee2e6;
+    }
+    .timeline-item {
+        position: relative;
+    }
+    .timeline-item:before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: -35px;
+        width: 20px;
+        height: 20px;
+        background-color: #0d6efd;
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}

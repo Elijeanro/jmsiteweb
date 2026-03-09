@@ -1,0 +1,67 @@
+/* Police et couleurs principales */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    padding-top: 70px; /* Pour éviter que le contenu soit caché par la navbar fixe */
+}
+
+.navbar-brand .logo-img {
+            height: 35px;
+            margin-right: 8px;
+        }
+
+/* Effets sur les cartes */
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Style des boutons */
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Style du pied de page */
+footer {
+    margin-top: 100px !important;
+    bottom: 0;
+    /*position: absolute;   
+    width: 100%;*/
+}
+
+/* Style du carousel */
+.carousel-caption {
+    bottom: 3rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Animation pour les icônes */
+.fa-3x {
+    transition: transform 0.3s;
+}
+
+.card:hover .fa-3x {
+    transform: scale(1.2);
+}

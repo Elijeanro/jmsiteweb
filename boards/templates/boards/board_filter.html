@@ -1,0 +1,72 @@
+<div class="text-center mb-4">
+    <h3>Nos Bureaux</h3>
+    <p class="text-muted">Découvrez les membres de nos différents bureaux</p>
+</div>
+
+<!-- Filtrage des bureaux -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+        <div class="card border-primary">
+            <div class="card-body">
+                <form id="boardFilterForm" method="get">
+                    <div class="input-group">
+                        <label class="input-group-text" for="boardSelect">Type de bureau</label>
+                        <select class="form-select" id="boardSelect" name="board_type">
+                            <option value="">Bureau Diocésain (par défaut)</option>
+                            <option value="decanal">Bureaux Décanaux</option>
+                            <option value="parish">Bureaux Paroissiaux</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search me-1"></i> Voir
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Affichage des bureaux décanaux (si sélectionné) -->
+<div id="decanalBoardsContainer" style="display: none;">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sélectionnez un doyenné</h5>
+                    <select id="doyenneSelect" class="form-select">
+                        <option value="">Sélectionnez un doyenné</option>
+                        {% for doyenne in doyennes %}
+                        <option value="{{ doyenne.id }}">{{ doyenne.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="decanalBoardMembers"></div>
+</div>
+
+<!-- Affichage des bureaux paroissiaux (si sélectionné) -->
+<div id="parishBoardsContainer" style="display: none;">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sélectionnez une paroisse</h5>
+                    <select id="parishSelect" class="form-select">
+                        <option value="">Sélectionnez une paroisse</option>
+                        {% for parish in parishes %}
+                        <option value="{{ parish.id }}">{{ parish.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="parishBoardMembers"></div>
+</div>
+
+<!-- Affichage des membres par défaut (bureau diocésain) -->
+<div id="defaultBoardMembers">
+    {% include 'boards/members_list.html' with members=diocesan_members %}
+</div>

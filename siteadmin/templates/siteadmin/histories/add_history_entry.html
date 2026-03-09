@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}Ajouter une Entrée Historique - Administration{% endblock %}
+
+{% block extra_css %}
+<style>
+.entry-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid #0d6efd;
+}
+.entry-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+.entry-date {
+    font-weight: bold;
+    color: #0d6efd;
+}
+#imagePreview {
+    display: none;
+    margin-top: 10px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-history me-2"></i>Ajouter une Entrée Historique</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Formulaire pour ajouter une nouvelle entrée -->
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Sous-titre -->
+                        <div class="mb-3">
+                            <label for="{{ form.subtitle.id_for_label }}" class="form-label">
+                                <i class="fas fa-heading me-1"></i>Sous-titre de l'entrée historique
+                            </label>
+                            {{ form.subtitle }}
+                            {% if form.subtitle.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.subtitle.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Contenu -->
+                        <div class="mb-3">
+                            <label for="{{ form.content.id_for_label }}" class="form-label">
+                                <i class="fas fa-align-left me-1"></i>Contenu
+                            </label>
+                            {{ form.content }}
+                            {% if form.content.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.content.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Date -->
+                        <div class="mb-3">
+                            <label for="{{ form.date.id_for_label }}" class="form-label">
+                                <i class="fas fa-calendar-alt me-1"></i>Date de l'événement
+                            </label>
+                            {{ form.date }}
+                            {% if form.date.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.date.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">
+                                <i class="fas fa-image me-1"></i>Image
+                            </label>
+                            {{ form.image }}
+                            <div id="imagePreview"></div>
+                            {% if form.image.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.image.errors|first }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Formats acceptés : JPG, JPEG, PNG</div>
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.history.back();">
+                                <i class="fas fa-arrow-left me-1"></i>Retour
+                            </button>
+                            <div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Ajouter l'entrée
+                                </button>
+                                <a href="{% url 'manage_history_entries' history.id %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-1"></i>Annuler
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Liste des entrées existantes -->
+                    <div class="mt-5">
+                        <h4 class="mb-3">Entrées existantes</h4>
+                        {% if entries %}
+                        <div class="accordion" id="entriesAccordion">
+                            {% for entry in entries %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{ entry.id }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ entry.id }}" aria-expanded="false" aria-controls="collapse{{ entry.id }}">
+                                        <span class="entry-date">{{ entry.date|date:"d M Y" }}</span> - {{ entry.subtitle }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ entry.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ entry.id }}" data-bs-parent="#entriesAccordion">
+                                    <div class="accordion-body">
+                                        <p>{{ entry.content }}</p>
+                                        {% if entry.image %}
+                                        <img src="{{ entry.image.url }}" class="img-fluid mt-2" style="max-height: 200px;" alt="{{ entry.subtitle }}">
+                                        {% endif %}
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <a href="{% url 'edit_history_entry' history.id entry.id %}" class="btn btn-sm btn-outline-warning me-2">
+                                                <i class="fas fa-edit"></i> Modifier
+                                            </a>
+                                            <a href="{% url 'delete_history_entry' history.id entry.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette entrée ?')">
+                                                <i class="fas fa-trash"></i> Supprimer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info">Aucune entrée historique trouvée pour cet historique.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Validation côté client
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', function(e) {
+        let isValid = true;
+
+        // Vérification du sous-titre
+        const subtitle = document.getElementById('{{ form.subtitle.id_for_label }}');
+        if (!subtitle.value.trim()) {
+            isValid = false;
+            subtitle.classList.add('is-invalid');
+        } else {
+            subtitle.classList.remove('is-invalid');
+        }
+
+        // Vérification du contenu
+        const content = document.getElementById('{{ form.content.id_for_label }}');
+        if (!content.value.trim()) {
+            isValid = false;
+            content.classList.add('is-invalid');
+        } else {
+            content.classList.remove('is-invalid');
+        }
+
+        // Vérification de la date
+        const date = document.getElementById('{{ form.date.id_for_label }}');
+        if (!date.value) {
+            isValid = false;
+            date.classList.add('is-invalid');
+        } else {
+            date.classList.remove('is-invalid');
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            alert('Veuillez remplir tous les champs obligatoires.');
+        }
+    });
+
+    // Aperçu des images avant téléchargement
+    const imageInput = document.getElementById('{{ form.image.id_for_label }}');
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = '';
+
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail mt-2';
+                    img.style.maxHeight = '150px';
+                    imagePreview.appendChild(img);
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

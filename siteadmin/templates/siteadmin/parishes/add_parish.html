@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Ajouter une Paroisse - Administration{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-church me-2"></i>Ajouter une Base</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Nom de la Paroisse -->
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">
+                                <i class="fas fa-heading me-1"></i>Nom de la paroisse
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.name.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Localisation -->
+                        <div class="mb-3">
+                            <label for="{{ form.location.id_for_label }}" class="form-label">
+                                <i class="fas fa-map-marker-alt me-1"></i>Localisation/Quartier
+                            </label>
+                            {{ form.location }}
+                            {% if form.location.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.location.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Doyenné -->
+                        <div class="mb-3">
+                            <label for="{{ form.doyenne.id_for_label }}" class="form-label">
+                                <i class="fas fa-church me-1"></i>Doyenné
+                            </label>
+                            {{ form.doyenne }}
+                            {% if form.doyenne.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.doyenne.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">
+                                <i class="fas fa-image me-1"></i>Image
+                            </label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.image.errors|first }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Formats acceptés : JPG, JPEG, PNG</div>
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.history.back();">
+                                <i class="fas fa-arrow-left me-1"></i>Retour
+                            </button>
+                            <div>
+                                <button type="submit" name="save_and_continue" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Enregistrer et continuer
+                                </button>
+                                <a href="{% url 'manage_board_types' %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-1"></i>Annuler
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

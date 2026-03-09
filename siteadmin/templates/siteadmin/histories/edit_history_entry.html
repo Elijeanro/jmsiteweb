@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Modifier une Entrée Historique - Administration{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-white">
+                    <h2 class="mb-0"><i class="fas fa-edit me-2"></i>Modifier une Entrée Historique</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Sous-titre -->
+                        <div class="mb-3">
+                            <label for="{{ form.subtitle.id_for_label }}" class="form-label">
+                                <i class="fas fa-heading me-1"></i>Sous-titre de l'entrée historique
+                            </label>
+                            {{ form.subtitle }}
+                            {% if form.subtitle.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.subtitle.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Contenu -->
+                        <div class="mb-3">
+                            <label for="{{ form.content.id_for_label }}" class="form-label">
+                                <i class="fas fa-align-left me-1"></i>Contenu
+                            </label>
+                            {{ form.content }}
+                            {% if form.content.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.content.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Date -->
+                        <div class="mb-3">
+                            <label for="{{ form.date.id_for_label }}" class="form-label">
+                                <i class="fas fa-calendar-alt me-1"></i>Date de l'événement
+                            </label>
+                            {{ form.date }}
+                            {% if form.date.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.date.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">
+                                <i class="fas fa-image me-1"></i>Image
+                            </label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.image.errors|first }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Formats acceptés : JPG, JPEG, PNG</div>
+                            {% if form.instance.image %}
+                            <div class="mt-2">
+                                <img src="{{ form.instance.image.url }}" class="img-thumbnail" style="max-height: 100px;" alt="Image actuelle">
+                                <div class="form-text">Image actuelle</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.history.back();">
+                                <i class="fas fa-arrow-left me-1"></i>Retour
+                            </button>
+                            <div>
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-save me-1"></i>Enregistrer les modifications
+                                </button>
+                                <a href="{% url 'manage_history_entries' history_id %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-1"></i>Annuler
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
