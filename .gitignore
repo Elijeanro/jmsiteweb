@@ -9,7 +9,7 @@ env/
 
 # Django
 db.sqlite3
-media/
+# media/
 
 # OS
 .DS_Store

@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['jmsiteweb.onrender.com', 'localhost', '127.0.0.1']  # En dÃ©veloppement, on autorise tous les hÃ´tes. Ã€ changer en production.
+ALLOWED_HOSTS = ['jmsiteweb.onrender.com', 'localhost', '127.0.0.1']  # En développement, on autorise tous les hÃ´tes. Ã€ changer en production.
 
 
 # Application definition
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'jm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Assure-toi que cette ligne est prÃ©sente
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Assure-toi que cette ligne est présente
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,22 +130,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# Dossiers supplÃ©mentaires oÃ¹ Django doit chercher les fichiers statiques
+# Dossiers supplémentaires où Django doit chercher les fichiers statiques
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-# Dossier oÃ¹ les fichiers statiques seront collectÃ©s pour la production
+# Dossier où les fichiers statiques seront collectés pour la production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# URL pour accÃ©der aux fichiers uploadÃ©s
+# URL pour accéder aux fichiers uploadés
 MEDIA_URL = '/media/'
 
-# Dossier oÃ¹ les fichiers uploadÃ©s seront stockÃ©s
+# Dossier où les fichiers uploadés seront stockés
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
