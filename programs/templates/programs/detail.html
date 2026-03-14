@@ -1,0 +1,72 @@
+﻿{% extends "base.html" %}
+
+{% block title %}{{ program.title }} - Programmes{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">{{ program.title }}</h1>
+
+    <a href="{% url 'program_list' %}" class="btn btn-outline-secondary mb-4">
+        <i class="fas fa-arrow-left me-1"></i>Retour à la liste des programmes
+    </a>
+
+    {% if program.description %}
+        <p class="mb-4">{{ program.description }}</p>
+    {% endif %}
+
+    {% if program.files.exists %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Fichiers du programme</h5>
+                {% for f in program.files.all %}
+                    <div class="mb-4">
+                        <strong>{{ f.label|default:"Programme" }}</strong>
+                        {% if f.end_date %}<em class="ms-2">(valable jusqu'au {{ f.end_date }})</em>{% endif %}
+                        <div class="mt-3">
+                            {% if f.is_pdf %}
+                                <embed class="w-100" style="height: 75vh;" src="{{ f.file.url }}" type="application/pdf" />
+                            {% else %}
+                                <img class="img-fluid" src="{{ f.file.url }}" alt="{{ f.label }}" />
+                            {% endif %}
+                        </div>
+                        <a href="{{ f.file.url }}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">Télécharger</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if program.schedules.exists %}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Planning</h5>
+                {% for schedule in program.schedules.all %}
+                    <div class="mb-4">
+                        <h6>
+                            {{ schedule.start_date }}
+                            {% if schedule.end_date %} - {{ schedule.end_date }}{% endif %}
+                        </h6>
+                        {% if schedule.subtitle %}
+                            <p class="text-muted">{{ schedule.subtitle }}</p>
+                        {% endif %}
+
+                        {% if schedule.items.exists %}
+                            <ul class="list-group">
+                            {% for item in schedule.items.all %}
+                                <li class="list-group-item">
+                                    {{ item.start_time }}
+                                    {% if item.end_time %} - {{ item.end_time }}{% endif %}
+                                    : {{ item.description }}
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <div class="alert alert-info">Aucun horaire défini.</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

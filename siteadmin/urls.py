@@ -1,4 +1,4 @@
-from django.urls import path
+﻿from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -27,13 +27,13 @@ urlpatterns = [
     path('histories/edit/<int:history_id>/', views.edit_history, name='edit_history'),
     path('histories/delete/<int:history_id>/', views.delete_history, name='delete_history'),
 
-    # Gestion des Entrées Historiques
+    # Gestion des EntrÃ©es Historiques
     path('histories/<int:history_id>/entries/', views.manage_history_entries, name='manage_history_entries'),
     path('histories/<int:history_id>/entries/add/', views.add_history_entry, name='add_history_entry'),
     path('histories/<int:history_id>/entries/edit/<int:entry_id>/', views.edit_history_entry, name='edit_history_entry'),
     path('histories/<int:history_id>/entries/delete/<int:entry_id>/', views.delete_history_entry, name='delete_history_entry'),
     
-    # Gestion des Doyennés
+    # Gestion des DoyennÃ©s
     path('doyennes/', views.manage_doyennes, name='manage_doyennes'),
     path('doyennes/add/', views.add_doyenne, name='add_doyenne'),
     path('doyennes/edit/<int:doyenne_id>/', views.edit_doyenne, name='edit_doyenne'),
@@ -79,9 +79,26 @@ urlpatterns = [
     path('boards/memberships/', views.manage_board_memberships, name='manage_board_memberships'),
     path('boards/memberships/add/', views.add_board_membership, name='add_board_membership'),
     path('boards/memberships/<int:membership_id>/edit/', views.edit_board_membership, name='edit_board_membership'),
-    path('boards/memberships/<int:membership_id>/delete/', views.delete_board_membership, name='delete_board_membership'),
+    path('boards/memberships/<int:membership_id>/delete/', views.delete_board_membership, name='delete_board_membership'),    # Gestion des Programmes
+    path('programs/', views.manage_programs, name='manage_programs'),
+    path('programs/add/', views.add_program, name='add_program'),
+    path('programs/edit/<int:program_id>/', views.edit_program, name='edit_program'),
+    path('programs/delete/<int:program_id>/', views.delete_program, name='delete_program'),
 
-    
+    path('programs/files/', views.manage_program_content_file, name='manage_program_content_file'),
+    path('programs/files/add/', views.add_program_content_file, name='add_program_content_file'),
+    path('programs/files/edit/<int:file_id>/', views.edit_program_content_file, name='edit_program_content_file'),
+    path('programs/files/delete/<int:file_id>/', views.delete_program_content_file, name='delete_program_content_file'),
+
+    path('programs/schedules/', views.manage_program_content_schedule, name='manage_program_content_schedule'),
+    path('programs/schedules/add/', views.add_program_content_schedule, name='add_program_content_schedule'),
+    path('programs/schedules/edit/<int:schedule_id>/', views.edit_program_content_schedule, name='edit_program_content_schedule'),
+    path('programs/schedules/delete/<int:schedule_id>/', views.delete_program_content_schedule, name='delete_program_content_schedule'),
+
+    path('programs/schedules/items/', views.manage_program_content_schedule_list, name='manage_program_content_schedule_list'),
+    path('programs/schedules/items/add/', views.add_program_content_schedule_list, name='add_program_content_schedule_list'),
+    path('programs/schedules/items/edit/<int:item_id>/', views.edit_program_content_schedule_list, name='edit_program_content_schedule_list'),
+    path('programs/schedules/items/delete/<int:item_id>/', views.delete_program_content_schedule_list, name='delete_program_content_schedule_list'),
     # Autres URLs
     path('events/delete-image/<int:event_id>/<int:image_id>/', views.delete_event_image, name='delete_event_image'),
 ]

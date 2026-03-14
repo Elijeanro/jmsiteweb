@@ -36,19 +36,20 @@
                 <div class="app-logo-circle">
                     <img src="{% static 'images/logo_jm.jpg' %}" alt="Logo J+M" class="logo-img">
                 </div>
-                <i class="fas fa-cross me-2"></i>Jésus Miséricordieux
+                <i class="fas fa-cross me-1"></i>Jésus Miséricordieux
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'events' %}">Événements</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'documents' %}">Bibliothèque</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'histories' %}">Historique</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'faustine' %}">Sainte Faustine</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'parishes' %}">Liste des bases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'events' %}"><i class="fas fa-calendar-alt"></i>Événements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'documents' %}"><i class="fas fa-book"></i>Bibliothèque</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'programs' %}"><i class="fas fa-clipboard-list"></i>Programmes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'histories' %}"><i class="fas fa-history"></i>Historique</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'faustine' %}"><i class="fas fa-user-nun"></i>Sainte Faustine</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'parishes' %}"><i class="fas fa-church"></i>Liste des bases</a></li>
 
                     <!-- Lien vers le back-office pour les administrateurs -->
                     {% if user.is_authenticated and user.is_superuser %}

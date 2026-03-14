@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Tableau de Bord - Administration{% endblock %}
 
@@ -10,7 +10,7 @@
         <div class="col-md-4 mb-4">
             <div class="card bg-danger text-white h-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Gérer les Événements</h5>
+                    <h5 class="card-title">Gérer les Evènements</h5>
                     <a href="{% url 'manage_events' %}" class="btn btn-success">Accéder</a>
                 </div>
             </div>
@@ -86,5 +86,30 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Programmes</h5>
+                    <a href="{% url 'manage_programs' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Fichiers Programmes</h5>
+                    <a href="{% url 'manage_program_content_file' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gérer les Plannings</h5>
+                    <a href="{% url 'manage_program_content_schedule' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div></div>
+    {% endblock %}

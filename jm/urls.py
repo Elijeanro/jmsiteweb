@@ -1,4 +1,4 @@
-"""
+﻿"""
 URL configuration for jm project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -31,6 +31,7 @@ urlpatterns = [
     path('histories/', include('histories.urls')),
     path('parishes/', include('parishes.urls')),
     path('boards/', include('boards.urls')),
+    path('programs/', include('programs.urls')),
     
 ]
 
@@ -40,3 +41,4 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
+
